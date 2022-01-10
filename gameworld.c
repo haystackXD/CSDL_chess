@@ -37,10 +37,10 @@ void init_gameworld(struct gameworld_info *self)
 
 	// Initialize SDL_image for png
 	if ((IMG_Init(img_flags) & IMG_INIT_PNG) != img_flags)
-		debug_log("SDL_image could not initialize\n", IMG_GetError);
+		debug_log("SDL_image could not initialize SDL_Error: %s\n", SDL_GetError());
 
 	// return Actors required by the game
-	self->iActors = createActors();
+	self->iActors = createActors(self);
 }
 
 

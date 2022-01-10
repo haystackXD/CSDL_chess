@@ -2,16 +2,16 @@
 #define __ACTORS_H_ 1
 
 #include "include/utils.h"
+#include "texture.h"
 #include "gameworld.h"
 
 struct ActorCollector {
-	uint8_t box_color;
 
 	struct SDL_Rect mRect;
-	struct SDL_Rect chessSquare;
+	struct texture chessBoxTextureObj;
 };
 
-void *createActors(void);
+void *createActors(struct gameworld_info*);
 
 void renderActors(struct ActorCollector*, struct gameworld_info *);
 

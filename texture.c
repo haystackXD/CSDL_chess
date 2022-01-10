@@ -8,6 +8,7 @@ bool texture_loadTextureFromFile(struct texture* self, const char* path)
 	if (!image) 
 		debug_log("IMG_Load: %s\n", IMG_GetError());
 
+	return false;
 }
 
 void texture_free(struct texture *self)
@@ -27,12 +28,17 @@ void texture_free(struct texture *self)
 
 void texture_render(
 		struct texture *self, 
-		struct gameworld_info *game,
-		const SDL_Rect *, 
-		const double angle, 
-		const SDL_Point *,
-		const SDL_RendererFlip
+		SDL_Renderer* gRenderer,
+		const SDL_Rect * coRect, 
+		const double angle,
+		const SDL_Point* center,
+		const SDL_RendererFlip flip
 		)
 {
+	SDL_RenderCopy(gRenderer, self->m_Texture, NULL, NULL);
+}
 
+const SDL_Rect* texture_getTextureRect(struct texture *self)
+{
+	return &self->m_Rect;
 }

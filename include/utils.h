@@ -14,5 +14,13 @@
 
 #define TOTAL_CHESS_SQUARES 64
 
+#define min(num1, num2) ((num1 > num2) ? num2 : num1)
+
+#define debug_log(...) 	do {	 	\
+	fprintf(stderr, __VA_ARGS__);	\
+	exit(EXIT_FAILURE);		\
+} while (0)
+
+
 void *safe_alloc(size_t);
-void debug_log(char*, ...);
+

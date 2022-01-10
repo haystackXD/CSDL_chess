@@ -22,9 +22,9 @@ const SDL_Rect* texture_getTextureRect(struct texture *);
 // render texture on renderer device
 void texture_render(
 		struct texture *, 
-		struct gameworld_info *,
+		SDL_Renderer*,
 		const SDL_Rect *, 
-		const double angle, 
+		const double, 
 		const SDL_Point *,
 		const SDL_RendererFlip
 		);
