@@ -7,13 +7,13 @@ DEBUGGER=gdb
 LIBS=`sdl2-config --cflags --libs` -lSDL2_image
 
 # files for compilation
-CFILES=main.c gameworld.c Actors.c include/helper_fcn.c
+CFILES=main.c gameworld.c Actors.c include/utils.c
 
 # output file name
 OUTPUT_FILE=./main.out
 
 all:
-	$(CC) $(CFILES) $(LIBS) -o $(OUTPUT_FILE)
+	$(CC) $(CFILES) $(LIBS) -Wall -o $(OUTPUT_FILE)
 
 run:
 	$(OUTPUT_FILE)

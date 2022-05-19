@@ -1,11 +1,13 @@
-#include "include/header.h"
-#include "Actors.h"
+#ifndef __GAMEWORLD_H_
+#define __GAMEWORLD_H_ 1
+
+#include "include/utils.h"
 
 struct gameworld_info 
 {
 	// Collection of actors for rendering handling 
 	// All textures 
-	struct ActorCollector *Actors;
+	void *iActors;
 
 	// name of window that is gamename
 	const char* GAMENAME;
@@ -44,3 +46,5 @@ void render(struct gameworld_info *);
 
 // handle SDL events 
 void handleEvent(struct gameworld_info *);
+
+#endif

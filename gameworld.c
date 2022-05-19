@@ -1,4 +1,5 @@
 #include "gameworld.h"
+#include "Actors.h"
 
 void init_gameworld(struct gameworld_info *self)
 {
@@ -31,7 +32,7 @@ void init_gameworld(struct gameworld_info *self)
 				SDL_GetError());
 
 	// return Actors required by the game
-	self->Actors = createActors();
+	self->iActors = createActors();
 }
 
 
@@ -53,26 +54,19 @@ void handleEvent(struct gameworld_info *self)
 	}
 }
 
-SDL_Rect mRect = {
-	.x = 0,
-	.y = 0,
-	.w = 100,
-	.h = 300,
-};
-
+// Render textures on screen
 void render(struct gameworld_info *self)
 {
-	struct ActorCollector *gameActors = self->Actors;
+	struct ActorCollector *gameActors = (struct ActorCollector *)self->iActors;
 
 	/* Select the color for drawing. It is set to red here. */
-	SDL_SetRenderDrawColor(self->gRenderer, 255, 0, 0, 255);
+	SDL_SetRenderDrawColor(self->gRenderer, 0xff, 0xff, 0xff, 255);
 
 	// Clear renderer 
 	SDL_RenderClear(self->gRenderer);
-	SDL_SetRenderDrawColor(self->gRenderer, 0xff, 0xff, 0xff, 0xff);
 
-	// Draw rectangle of blackcolor
-	SDL_RenderDrawRect(self->gRenderer, &gameActors->mRect);
+	// Render all actors
+	renderActors(gameActors, self);
 
 	// Update Renderer 
 	SDL_RenderPresent(self->gRenderer);
@@ -87,7 +81,7 @@ void run_mainloop(struct gameworld_info *self)
 void free_gameworld(struct gameworld_info *self)
 {
 	// Free Actors before closing game
-	free(self->Actors);
+	free(self->iActors);
 
 	// Destroy Renderer device
 	SDL_DestroyRenderer(self->gRenderer);
