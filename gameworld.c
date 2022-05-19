@@ -29,6 +29,9 @@ void init_gameworld(struct gameworld_info *self)
 	if (self->gRenderer == NULL)
 		debug_log("No driver is present for rendering texture SDL_Error: %s\n", 
 				SDL_GetError());
+
+	// return Actors required by the game
+	self->Actors = createActors();
 }
 
 
@@ -59,6 +62,8 @@ SDL_Rect mRect = {
 
 void render(struct gameworld_info *self)
 {
+	struct ActorCollector *gameActors = self->Actors;
+
 	/* Select the color for drawing. It is set to red here. */
 	SDL_SetRenderDrawColor(self->gRenderer, 255, 0, 0, 255);
 
@@ -67,7 +72,7 @@ void render(struct gameworld_info *self)
 	SDL_SetRenderDrawColor(self->gRenderer, 0xff, 0xff, 0xff, 0xff);
 
 	// Draw rectangle of blackcolor
-	SDL_RenderDrawRect(self->gRenderer, &mRect);
+	SDL_RenderDrawRect(self->gRenderer, &gameActors->mRect);
 
 	// Update Renderer 
 	SDL_RenderPresent(self->gRenderer);
@@ -81,6 +86,9 @@ void run_mainloop(struct gameworld_info *self)
 
 void free_gameworld(struct gameworld_info *self)
 {
+	// Free Actors before closing game
+	free(self->Actors);
+
 	// Destroy Renderer device
 	SDL_DestroyRenderer(self->gRenderer);
 

@@ -1,7 +1,11 @@
 #include "include/header.h"
+#include "Actors.h"
 
 struct gameworld_info 
 {
+	// Collection of actors for rendering handling 
+	// All textures 
+	struct ActorCollector *Actors;
 
 	// name of window that is gamename
 	const char* GAMENAME;
