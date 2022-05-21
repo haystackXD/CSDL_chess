@@ -1,7 +1,7 @@
 #include "include/utils.h"
 #include "Actors.h"
 
-void initChessBox(struct ActorCollector* self)
+void initStartBox(struct ActorCollector* self)
 {
 	self->chessSquare.x = 0;
 	self->chessSquare.y = 0;
@@ -24,7 +24,7 @@ void *createActors(void)
 	gameActors->mRect.w = 80;
 	gameActors->mRect.h = 80;
 
-	initChessBox(gameActors);
+	initStartBox(gameActors);
 
 	return (void *)gameActors;
 }
@@ -52,5 +52,5 @@ void renderActors(struct ActorCollector *self, struct gameworld_info* game)
 		self->chessSquare.x = 0;
 		self->box_color = ~self->box_color;
 	}
-	initChessBox(self);
+	initStartBox(self);
 }

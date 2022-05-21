@@ -8,7 +8,9 @@ void init_gameworld(struct gameworld_info *self)
 	self->screen_width = SCREEN_WIDTH;
 	self->screen_height = SCREEN_HEIGHT;
 
-	SDL_Init(SDL_INIT_VIDEO);              // Initialize SDL2
+	if (SDL_Init(SDL_INIT_VIDEO) != 0)              // Initialize SDL2
+		debug_log("SDL could not able initialize SDL_Error: %s\n", SDL_GetError());
+
 
 	self->gWindow = SDL_CreateWindow(
 			self->GAMENAME, 
@@ -31,27 +33,26 @@ void init_gameworld(struct gameworld_info *self)
 		debug_log("No driver is present for rendering texture SDL_Error: %s\n", 
 				SDL_GetError());
 
+	int img_flags = IMG_INIT_PNG;
+
+	// Initialize SDL_image for png
+	if ((IMG_Init(img_flags) & IMG_INIT_PNG) != img_flags)
+		debug_log("SDL_image could not initialize\n", IMG_GetError);
+
 	// return Actors required by the game
 	self->iActors = createActors();
 }
 
 
-// Event driven game 
-void handleEvent(struct gameworld_info *self)
+// Handle events for game window
+void handleEvent(struct gameworld_info *self, SDL_Event* e)
 {
-	SDL_Event e;
-
-	while (SDL_WaitEvent(&e) != 0)
+	if (e->window.event == SDL_WINDOWEVENT_RESIZED)
 	{
-		switch (e.type)
-		{
-			case SDL_QUIT:
-				return;
-			default:
-				break;
-		}
-		render(self);
+		self->screen_width = e->window.data1;
+		self->screen_height = e->window.data2;
 	}
+
 }
 
 // Render textures on screen
@@ -74,8 +75,26 @@ void render(struct gameworld_info *self)
 
 void run_mainloop(struct gameworld_info *self)
 {
-	// event driven application main loop
-	handleEvent(self);
+	SDL_Event e;
+
+	while (SDL_WaitEvent(&e) != 0)
+	{
+		switch (e.type)
+		{
+			// Quit game loop
+			case SDL_QUIT:
+				return;
+
+				// Handle window events
+			case SDL_WINDOWEVENT:
+				handleEvent(self, &e);
+				break;
+
+			default:
+				break;
+		}
+		render(self);
+	}
 }
 
 void free_gameworld(struct gameworld_info *self)
@@ -88,6 +107,9 @@ void free_gameworld(struct gameworld_info *self)
 
 	// Destory game window
 	SDL_DestroyWindow(self->gWindow);
+
+	// unload the dynamically loaded image libraries
+	IMG_Quit();
 
 	// free SDL allocated data
 	SDL_Quit();

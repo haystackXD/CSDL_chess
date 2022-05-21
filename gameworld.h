@@ -45,6 +45,6 @@ int getHeight(struct gameworld_info *);
 void render(struct gameworld_info *);
 
 // handle SDL events 
-void handleEvent(struct gameworld_info *);
+void handleEvent(struct gameworld_info *, SDL_Event *);
 
 #endif

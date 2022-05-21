@@ -7,7 +7,7 @@ DEBUGGER=gdb
 LIBS=`sdl2-config --cflags --libs` -lSDL2_image
 
 # files for compilation
-CFILES=main.c gameworld.c Actors.c include/utils.c
+CFILES=main.c gameworld.c Actors.c texture.c include/utils.c
 
 # output file name
 OUTPUT_FILE=./main.out
