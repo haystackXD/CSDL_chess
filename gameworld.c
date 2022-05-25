@@ -61,7 +61,7 @@ void render(struct gameworld_info *self)
 	struct ActorCollector *gameActors = (struct ActorCollector *)self->iActors;
 
 	/* Select the color for drawing. It is set to red here. */
-	SDL_SetRenderDrawColor(self->gRenderer, 0xff, 0xff, 0xff, 255);
+	SDL_SetRenderDrawColor(self->gRenderer, 0x6b, 0x6e, 0x67, 0xff);
 
 	// Clear renderer 
 	SDL_RenderClear(self->gRenderer);

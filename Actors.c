@@ -16,22 +16,15 @@ void initChessBoxTexture(struct ActorCollector *self,
 		0, 0, width, height
 	};
 
-	// total size of chessBoard
-	textureObj->m_Rect.x = 0;
-	textureObj->m_Rect.y = 0;
-	textureObj->m_Rect.w = width * 8;
-	textureObj->m_Rect.h = height * 8;
-
 	// Create a software level surface to draw chessboard
 	// then copy it to hardware texture
 	chessBoxSurface = SDL_CreateRGBSurface(0, 
-			textureObj->m_Rect.w, 
-			textureObj->m_Rect.h,
+			tmpRect.w * 8,
+			tmpRect.h * 8,
 			32, 						// depth  of color
 			0, 0, 0, 0);
 	if (chessBoxSurface == NULL)
 		debug_log("Unable to create surface for chess Box SDL_Error: %s\n", SDL_GetError());
-
 
 	for (idy = 0; idy < 8; idy++)
 	{
@@ -75,6 +68,8 @@ void *createActors(struct gameworld_info* game)
 	// initialize chess Board Texture
 	initChessBoxTexture(gameActors, game, 100, 100);
 
+	initPawns(&gameActors->blackPawnPieces, game);
+
 	return (void *)gameActors;
 }
 
@@ -82,18 +77,26 @@ void renderActors(struct ActorCollector *self, struct gameworld_info* game)
 {
 	int square_window_dim = min(getWidth(game), getHeight(game));
 
-	SDL_Rect windowRect = {
-		.x = (getWidth(game) - square_window_dim) / 2, 
-		.y = 0, 
-		.w = square_window_dim,
-		.h = square_window_dim
-	};
+	self->chessBoxTextureObj.m_Rect.x = (getWidth(game) - square_window_dim) / 2; 
+	self->chessBoxTextureObj.m_Rect.y = (getHeight(game) - square_window_dim) / 2;
+	self->chessBoxTextureObj.m_Rect.w = square_window_dim;
+	self->chessBoxTextureObj.m_Rect.h = square_window_dim;
 
-
-	SDL_RenderCopy(
+	SDL_RenderCopy( 
 			game->gRenderer, 
-			self->chessBoxTextureObj.m_Texture, 
-			&self->chessBoxTextureObj.m_Rect, 
-			&windowRect
+			self->chessBoxTextureObj.m_Texture,  
+			NULL, &self->chessBoxTextureObj.m_Rect
+			); 
+
+	self->blackPawnPieces.m_Piece[0].m_Rect.x = 0;
+	self->blackPawnPieces.m_Piece[0].m_Rect.y = 0;
+	self->blackPawnPieces.m_Piece[0].m_Rect.w = 100;
+	self->blackPawnPieces.m_Piece[0].m_Rect.h = 100;
+
+	SDL_RenderCopy( 
+			game->gRenderer, 
+			self->blackPawnPieces.m_Piece[0].m_Texture,
+			NULL, 
+			&self->blackPawnPieces.m_Piece[0].m_Rect
 			); 
 }

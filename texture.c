@@ -1,6 +1,6 @@
 #include "texture.h"
 
-bool texture_loadTextureFromFile(struct texture* self, const char* path)
+bool texture_loadTextureFromFile(struct texture* self, struct gameworld_info* game, const char* path)
 {
 	SDL_Surface *image;
 
@@ -8,37 +8,43 @@ bool texture_loadTextureFromFile(struct texture* self, const char* path)
 	if (!image) 
 		debug_log("IMG_Load: %s\n", IMG_GetError());
 
+	self->m_Texture = SDL_CreateTextureFromSurface(game->gRenderer, image);
+
+	if (self->m_Texture == NULL)
+		debug_log("Unable to create texture from loaded surface SDL_Error: %s\n", 
+				SDL_GetError());
+
+	// Free unused surface
+	SDL_FreeSurface(image);
 	return false;
 }
 
 void texture_free(struct texture *self)
 {
+	// if texture is not all ready free we will free it
+	// by destroying it
 	if (self->m_Texture != NULL)
 	{
 		// destroy texture 
 		SDL_DestroyTexture(self->m_Texture);
+		self->m_Texture = NULL;
 
-		self->m_Rect.x = 0;
-		self->m_Rect.y = 0;
-
-		self->m_Rect.w = 0;
-		self->m_Rect.h = 0;
+		memset(&self->m_Rect, 0, sizeof(SDL_Rect));
 	}
 }
 
 void texture_render(
 		struct texture *self, 
-		SDL_Renderer* gRenderer,
-		const SDL_Rect * coRect, 
-		const double angle,
-		const SDL_Point* center,
-		const SDL_RendererFlip flip
+		struct gameworld_info* game,
+		SDL_Rect* coRect,
+		double angle,
+		SDL_Point* center,
+		SDL_RendererFlip flip
 		)
 {
-	SDL_RenderCopy(gRenderer, self->m_Texture, NULL, NULL);
-}
-
-const SDL_Rect* texture_getTextureRect(struct texture *self)
-{
-	return &self->m_Rect;
+	SDL_RenderCopyEx(
+			game->gRenderer, self->m_Texture, 
+			coRect,  &self->m_Rect,
+			angle, center, flip
+			);
 }
