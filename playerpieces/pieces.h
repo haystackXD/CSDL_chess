@@ -18,29 +18,13 @@ struct piece_struct
 
 };
 
-struct playerTextures 
-{
-	SDL_Texture* whiteQueen;
-	SDL_Texture* whiteKing;
-	SDL_Texture* whiteRook;
-	SDL_Texture* whitePawn;
-	SDL_Texture* whiteBishop;
-	SDL_Texture* whiteKnight;
-
-	SDL_Texture* blackQueen;
-	SDL_Texture* blackKing;
-	SDL_Texture* blackPawn;
-	SDL_Texture* blackRook;
-	SDL_Texture* blackBishop;
-	SDL_Texture* blackKnight;
-};
+// Initialize piece with given property
+void piece_init(
+		struct piece_struct *, 
+		struct piece_interface *,
+		SDL_Texture *, 
+		const int, 
+		const int
+		);
 
 
-// load player texture with required images
-struct playerTextures *load_players_texture(struct gameworld_info *game);
-
-// destroy player texture that is loaded during initialize-
-// time 
-void destroy_playerTextures(struct playerTextures* self);
-
-#endif

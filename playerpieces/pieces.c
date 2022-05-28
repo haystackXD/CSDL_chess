@@ -1,30 +1,18 @@
 #include "pieces.h"
 
-struct playerTextures *load_players_texture(struct gameworld_info *game)
+// Initialize piece required interface and
+// other properties 
+void piece_init(
+		struct piece_struct *self
+		struct piece_interface *pieceInterface, 
+		SDL_Texture* m_Texture,
+		const int which_row,
+		const int which_col
+		)
 {
-	struct playerTextures *pTexture = safe_alloc(sizeof(struct playerTextures));
-	struct texture tmpObj;
+	self->pinterface = pieceInterface;
+	self->m_Piece.m_Texture = m_Texture;
 
-	const char *fname[] = {
-		"images/whiteQueen.png", "images/whiteKing.png", "images/whiteRook.png",
-		"images/whitePawn.png", "images/whiteBishop.png", "images/whiteKnight.png",
-		"images/blackQueen.png", "images/blackKing.png", "images/blackPawn.png",
-		"images/blackRook.png", "images/blackBishop.png", "images/blackKnight.png"
-	};
-
-
-	for (unsigned size = 0, idx = 0; size < sizeof(struct playerTextures); size += sizeof(SDL_Texture *), idx++)
-	{
-		texture_loadTextureFromFile(&tmpObj, game, fname[idx]);
-		*(uint64_t *)((char *)pTexture+size) = (uint64_t)tmpObj.m_Texture;
-	}
-	return pTexture;
+	self->which_row = which_row;
+	self->which_col = which_col;
 }
-
-
-void destroy_playerTextures(struct playerTextures* self) 
-{
-	for (unsigned size = 0; size < sizeof(struct playerTextures); size += sizeof(SDL_Texture *))
-		SDL_DestroyTexture((SDL_Texture *)((char *)self+size));
-}
-

@@ -91,7 +91,6 @@ void run_mainloop(struct gameworld_info *self)
 				handleEvent(self, &e);
 				break;
 
-
 			case SDL_MOUSEMOTION:
 				break;
 

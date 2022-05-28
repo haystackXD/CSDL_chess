@@ -4,7 +4,7 @@
 #include "include/utils.h"
 #include "Texture.h"
 #include "GameWorld.h"
-#include "playerpieces/pieces.h"
+#include "playerpieces/player_texture.h"
 //#include "playerpieces/pawn_piece.h"
 
 struct ActorCollector {

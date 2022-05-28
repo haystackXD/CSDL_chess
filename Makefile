@@ -6,7 +6,7 @@ DEBUGGER=gdb
 # required library linking 
 LIBS=`sdl2-config --cflags --libs` -lSDL2_image
 
-PIECES=playerpieces/pieces.c
+PIECES=playerpieces/player_texture.c
 
 INCLUDES=include/*.c
 
