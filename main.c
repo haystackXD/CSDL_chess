@@ -1,5 +1,5 @@
 #include "include/utils.h"
-#include "gameworld.h"
+#include "GameWorld.h"
 
 
 int main(int argc, char *argv[])

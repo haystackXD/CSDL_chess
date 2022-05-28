@@ -2,16 +2,20 @@
 #define __ACTORS_H_ 1
 
 #include "include/utils.h"
-#include "texture.h"
-#include "gameworld.h"
-#include "players/pawn.h"
+#include "Texture.h"
+#include "GameWorld.h"
+#include "playerpieces/pieces.h"
+//#include "playerpieces/pawn_piece.h"
 
 struct ActorCollector {
 
 	// texture data for chessboard
 	struct texture chessBoxTextureObj;
 
-	struct pawn_struct blackPawnPieces;
+	struct playerTextures* pTextures;
+
+//	struct piece_struct blackPieces[2 * TOTAL_CHESS_COLS];
+//	struct piece_struct whitePieces[2 * TOTAL_CHESS_COLS];
 };
 
 // allocates memory for actors and initialize them 

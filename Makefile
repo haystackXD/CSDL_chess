@@ -6,8 +6,12 @@ DEBUGGER=gdb
 # required library linking 
 LIBS=`sdl2-config --cflags --libs` -lSDL2_image
 
+PIECES=playerpieces/pieces.c
+
+INCLUDES=include/*.c
+
 # files for compilation
-CFILES=main.c gameworld.c Actors.c texture.c include/utils.c players/pawn.c
+CFILES=*.c  $(INCLUDES) $(PIECES)
 
 # output file name
 OUTPUT_FILE=./main.out

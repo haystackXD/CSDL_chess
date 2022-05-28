@@ -10,4 +10,3 @@ void* safe_alloc(size_t size)
 	return addr;
 }
 
-

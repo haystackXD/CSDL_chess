@@ -9,10 +9,13 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 	640
+#define SCREEN_HEIGHT 	480
 
-#define TOTAL_CHESS_SQUARES 64
+#define TOTAL_CHESS_ROWS 8
+#define TOTAL_CHESS_COLS 8
+
+#define TOTAL_CHESS_SQUARES (TOTAL_CHESS_ROWS * TOTAL_CHESS_COLS)
 
 #define min(num1, num2) ((num1 > num2) ? num2 : num1)
 

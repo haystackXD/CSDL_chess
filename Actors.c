@@ -8,7 +8,7 @@ void initChessBoxTexture(struct ActorCollector *self,
 {
 	struct texture *textureObj = &self->chessBoxTextureObj;
 	SDL_Surface* chessBoxSurface;
-	uint8_t idx, idy, box_color = 0x0;
+	uint8_t idx, idy, box_color = 0xaf;
 
 	// Copy single square box in chess Board
 	// creating exact copy of first square box
@@ -37,7 +37,7 @@ void initChessBoxTexture(struct ActorCollector *self,
 			SDL_FillRect(chessBoxSurface, &tmpRect, SDL_MapRGB(
 						chessBoxSurface->format, 
 						box_color,
-						box_color, 
+						box_color,
 						box_color
 						));
 			// Change colors as we are moving to adjacent box
@@ -68,35 +68,33 @@ void *createActors(struct gameworld_info* game)
 	// initialize chess Board Texture
 	initChessBoxTexture(gameActors, game, 100, 100);
 
-	initPawns(&gameActors->blackPawnPieces, game);
+	gameActors->pTextures = load_players_texture(game);
 
 	return (void *)gameActors;
 }
+
 
 void renderActors(struct ActorCollector *self, struct gameworld_info* game)
 {
 	int square_window_dim = min(getWidth(game), getHeight(game));
 
-	self->chessBoxTextureObj.m_Rect.x = (getWidth(game) - square_window_dim) / 2; 
-	self->chessBoxTextureObj.m_Rect.y = (getHeight(game) - square_window_dim) / 2;
-	self->chessBoxTextureObj.m_Rect.w = square_window_dim;
-	self->chessBoxTextureObj.m_Rect.h = square_window_dim;
+	SDL_Rect* m_Rect = &self->chessBoxTextureObj.m_Rect;
+	//SDL_Rect* Piece_Rt = &self->blackPawnPieces.m_Piece.m_Rect;
 
-	SDL_RenderCopy( 
-			game->gRenderer, 
-			self->chessBoxTextureObj.m_Texture,  
-			NULL, &self->chessBoxTextureObj.m_Rect
-			); 
 
-	self->blackPawnPieces.m_Piece[0].m_Rect.x = 0;
-	self->blackPawnPieces.m_Piece[0].m_Rect.y = 0;
-	self->blackPawnPieces.m_Piece[0].m_Rect.w = 100;
-	self->blackPawnPieces.m_Piece[0].m_Rect.h = 100;
+	m_Rect->x = (getWidth(game) - square_window_dim) / 2; 
+	m_Rect->y = (getHeight(game) - square_window_dim) / 2;
+	m_Rect->w = square_window_dim;
+	m_Rect->h = square_window_dim;
 
-	SDL_RenderCopy( 
-			game->gRenderer, 
-			self->blackPawnPieces.m_Piece[0].m_Texture,
+	SDL_RenderCopy(game->gRenderer, 
+			self->chessBoxTextureObj.m_Texture,
 			NULL, 
-			&self->blackPawnPieces.m_Piece[0].m_Rect
-			); 
+			&self->chessBoxTextureObj.m_Rect);
+
+}
+
+void freeActors(struct ActorCollector *self)
+{
+	destroy_playerTextures(self->pTextures);
 }
