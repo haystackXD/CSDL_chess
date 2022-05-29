@@ -5,17 +5,19 @@
 #include "Texture.h"
 #include "GameWorld.h"
 #include "playerpieces/player_texture.h"
-//#include "playerpieces/pawn_piece.h"
+#include "playerpieces/pawn_piece.h"
+#include "playerpieces/queen_piece.h"
 
-struct ActorCollector {
-
+struct ActorCollector 
+{
 	// texture data for chessboard
-	struct texture chessBoxTextureObj;
+	struct texture chessBoxObj;
 
-	struct playerTextures* pTextures;
+	struct playerTextures* pTexture;
 
-//	struct piece_struct blackPieces[2 * TOTAL_CHESS_COLS];
-//	struct piece_struct whitePieces[2 * TOTAL_CHESS_COLS];
+    void *boxes[TOTAL_CHESS_SQUARES];
+
+    struct unorder_array uarray;
 };
 
 // allocates memory for actors and initialize them 

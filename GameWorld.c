@@ -75,8 +75,12 @@ void render(struct gameworld_info *self)
 
 void run_mainloop(struct gameworld_info *self)
 {
+    struct ActorCollector* iactors = (struct ActorCollector *)self->iActors;
 	SDL_Event e;
 	self->fw_cursor = false;
+    SDL_Rect *m_Rect = &iactors->chessBoxObj.m_Rect;
+    struct piece_struct *mypiece = NULL;
+    int row, col;
 
 	while (SDL_WaitEvent(&e) != 0)
 	{
@@ -92,13 +96,40 @@ void run_mainloop(struct gameworld_info *self)
 				break;
 
 			case SDL_MOUSEMOTION:
+                 if (
+                         m_Rect->x < e.motion.x &&
+                         m_Rect->y < e.motion.y &&
+                         m_Rect->x + m_Rect->w > e.motion.x &&
+                         m_Rect->y + m_Rect->h > e.motion.y
+                 )
+                 {
+                     row = (e.motion.y - m_Rect->y) / (m_Rect->h / 8);
+                     col = (e.motion.x - m_Rect->x) / (m_Rect->w / 8);
+
+                     if (mypiece != NULL)
+                        mypiece->pinterface->update_position(mypiece, iactors->boxes, row, col);
+                 }
+
 				break;
 
 			case SDL_MOUSEBUTTONUP:
-				self->fw_cursor = !self->fw_cursor;
-				break;
+                 if (
+                         m_Rect->x < e.motion.x &&
+                         m_Rect->y < e.motion.y &&
+                         m_Rect->x + m_Rect->w > e.motion.x &&
+                         m_Rect->y + m_Rect->h > e.motion.y
+                 )
+                 {
+                     row = (e.motion.y - m_Rect->y) / (m_Rect->h / 8);
+                     col = (e.motion.x - m_Rect->x) / (m_Rect->w / 8);
 
-			default:
+                     if (iactors->boxes[row * 8 + col] != NULL)
+                         mypiece = iactors->boxes[row * 8 +col];
+
+                     self->fw_cursor = !self->fw_cursor;
+                     if (self->fw_cursor == false)
+                         mypiece = NULL;
+                 }
 				break;
 		}
 

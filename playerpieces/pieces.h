@@ -10,12 +10,11 @@ struct piece_struct
 
 	// contains texture and its dimensions
 	// for particular piece
-	struct texture m_Piece;
+    SDL_Texture *m_Texture;
 
 	// contains coordinates of piece in chess board
 	int which_col;
 	int which_row;
-
 };
 
 // Initialize piece with given property
@@ -28,3 +27,4 @@ void piece_init(
 		);
 
 
+#endif

@@ -6,7 +6,7 @@ DEBUGGER=gdb
 # required library linking 
 LIBS=`sdl2-config --cflags --libs` -lSDL2_image
 
-PIECES=playerpieces/player_texture.c
+PIECES=playerpieces/*.c
 
 INCLUDES=include/*.c
 
@@ -17,7 +17,7 @@ CFILES=*.c  $(INCLUDES) $(PIECES)
 OUTPUT_FILE=./main.out
 
 all:
-	$(CC) $(CFILES) $(LIBS) -Wall -o $(OUTPUT_FILE)
+	$(CC) $(CFILES) $(LIBS) -o $(OUTPUT_FILE)
 
 run:
 	$(OUTPUT_FILE)
