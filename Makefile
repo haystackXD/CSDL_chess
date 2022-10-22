@@ -1,30 +1,7 @@
-# compiler settings
-CC=gcc
-
-DEBUGGER=gdb
-
-# required library linking 
-LIBS=`sdl2-config --cflags --libs` -lSDL2_image
-
-PIECES=playerpieces/*.c
-
-INCLUDES=include/*.c
-
-# files for compilation
-CFILES=*.c  $(INCLUDES) $(PIECES)
-
-# output file name
-OUTPUT_FILE=./main.out
-
 all:
-	$(CC) $(CFILES) $(LIBS) -o $(OUTPUT_FILE)
-
-run:
-	$(OUTPUT_FILE)
+	gcc.exe *.c  -I .\include\SDL2 -L .\lib -L.\bin -lsdl2 -lsdl2_image -o .\bin\main.exe
+	.\bin\main.exe
 
 debug:
-	$(CC) $(CFILES) $(LIBS) -g -o $(OUTPUT_FILE) 
-	$(DEBUGGER) -q $(OUTPUT_FILE)
-
-clean:
-	rm -rf $(OUTPUT_FILE)
+	gcc.exe *.c  -I .\include\SDL2 -L .\lib -L.\bin -lsdl2 -lsdl2_image -g -o .\bin\main.exe
+	gdb.exe .\bin\main.exe
