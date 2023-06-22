@@ -4,7 +4,7 @@ void loadTextureFromPath(struct texture* self, SDL_Renderer* gRenderer, char* pa
 {
 	SDL_Surface* finalSurface;
 
-	finalSurface = IMG_Load(path);
+	finalSurface = SDL_LoadBMP(path);
 	if (finalSurface == NULL)
 		errExit("Cannot find image at path: %s\n", path);
 
