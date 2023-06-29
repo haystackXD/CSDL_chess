@@ -182,18 +182,18 @@ void initScene2(struct gameScene* self, struct winInfo* winfo)
 	setupBoard(m_objects->chessboard , m_objects->mode);
 
 	idx = 0;
-	loadTextureFromPath(&m_objects->p_Texture[BLACK * TYPE_COUNT + idx++], winfo->gRenderer, ".\\image\\black_pawn.png");
-	loadTextureFromPath(&m_objects->p_Texture[BLACK * TYPE_COUNT + idx++], winfo->gRenderer, ".\\image\\black_rook.png");
-	loadTextureFromPath(&m_objects->p_Texture[BLACK * TYPE_COUNT + idx++], winfo->gRenderer, ".\\image\\black_knight.png");
-	loadTextureFromPath(&m_objects->p_Texture[BLACK * TYPE_COUNT + idx++], winfo->gRenderer, ".\\image\\black_bishop.png");
-	loadTextureFromPath(&m_objects->p_Texture[BLACK * TYPE_COUNT + idx++], winfo->gRenderer, ".\\image\\black_king.png");
-	loadTextureFromPath(&m_objects->p_Texture[BLACK * TYPE_COUNT + idx++], winfo->gRenderer, ".\\image\\black_queen.png");
+	loadTextureFromPath(&m_objects->p_Texture[BLACK * TYPE_COUNT + idx++], winfo->gRenderer, "image/black_pawn.png");
+	loadTextureFromPath(&m_objects->p_Texture[BLACK * TYPE_COUNT + idx++], winfo->gRenderer, "image/black_rook.png");
+	loadTextureFromPath(&m_objects->p_Texture[BLACK * TYPE_COUNT + idx++], winfo->gRenderer, "image/black_knight.png");
+	loadTextureFromPath(&m_objects->p_Texture[BLACK * TYPE_COUNT + idx++], winfo->gRenderer, "image/black_bishop.png");
+	loadTextureFromPath(&m_objects->p_Texture[BLACK * TYPE_COUNT + idx++], winfo->gRenderer, "image/black_king.png");
+	loadTextureFromPath(&m_objects->p_Texture[BLACK * TYPE_COUNT + idx++], winfo->gRenderer, "image/black_queen.png");
 
 	idx = 0;
-	loadTextureFromPath(&m_objects->p_Texture[WHITE * TYPE_COUNT + idx++], winfo->gRenderer, ".\\image\\white_pawn.png");
-	loadTextureFromPath(&m_objects->p_Texture[WHITE * TYPE_COUNT + idx++], winfo->gRenderer, ".\\image\\white_rook.png");
-	loadTextureFromPath(&m_objects->p_Texture[WHITE * TYPE_COUNT + idx++], winfo->gRenderer, ".\\image\\white_knight.png");
-	loadTextureFromPath(&m_objects->p_Texture[WHITE * TYPE_COUNT + idx++], winfo->gRenderer, ".\\image\\white_bishop.png");
-	loadTextureFromPath(&m_objects->p_Texture[WHITE * TYPE_COUNT + idx++], winfo->gRenderer, ".\\image\\white_king.png");
-	loadTextureFromPath(&m_objects->p_Texture[WHITE * TYPE_COUNT + idx++], winfo->gRenderer, ".\\image\\white_queen.png");
+	loadTextureFromPath(&m_objects->p_Texture[WHITE * TYPE_COUNT + idx++], winfo->gRenderer, "image/white_pawn.png");
+	loadTextureFromPath(&m_objects->p_Texture[WHITE * TYPE_COUNT + idx++], winfo->gRenderer, "image/white_rook.png");
+	loadTextureFromPath(&m_objects->p_Texture[WHITE * TYPE_COUNT + idx++], winfo->gRenderer, "image/white_knight.png");
+	loadTextureFromPath(&m_objects->p_Texture[WHITE * TYPE_COUNT + idx++], winfo->gRenderer, "image/white_bishop.png");
+	loadTextureFromPath(&m_objects->p_Texture[WHITE * TYPE_COUNT + idx++], winfo->gRenderer, "image/white_king.png");
+	loadTextureFromPath(&m_objects->p_Texture[WHITE * TYPE_COUNT + idx++], winfo->gRenderer, "image/white_queen.png");
 }

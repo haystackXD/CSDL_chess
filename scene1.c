@@ -46,5 +46,5 @@ void initScene1(struct gameScene* self, struct winInfo* wInfo)
 	self->handleEvent = handleEvent1;
 	self->freeScene = freeScene1;
 
-	loadTextureFromPath(&m_objects->chessTexture, wInfo->gRenderer, ".\\image\\chess.png");
+	loadTextureFromPath(&m_objects->chessTexture, wInfo->gRenderer, "image/chess.png");
 }

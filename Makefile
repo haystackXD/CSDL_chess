@@ -1,7 +1,7 @@
 all:
-	gcc.exe *.c  -I .\include\SDL2 -L .\lib -L.\bin -lsdl2 -lsdl2_image -o .\bin\main.exe
-	.\bin\main.exe
+	gcc *.c `sdl2-config --cflags --libs` -lSDL2_image -o /tmp/main
+	/tmp/main
 
 debug:
-	gcc.exe *.c  -I .\include\SDL2 -L .\lib -L.\bin -lsdl2 -lsdl2_image -g -o .\bin\main.exe
-	gdb.exe .\bin\main.exe
+	gcc *.c `sdl2-config --cflags --libs` -lSDL2_image -g -o /tmp/main
+	gdb /tmp/main
