@@ -176,7 +176,7 @@ void initScene2(struct gameScene* self, struct winInfo* winfo)
 	self->drawScene = drawScene2;
 	self->freeScene = freeScene2;
 
-	m_objects->moving_piece.type = NONE;
+	m_objects->moving_piece.type = NONE; 		// uninitialize memory
 	m_objects->mode = 0xffff0000;
 	setupBoard(m_objects->chessboard , m_objects->mode);
 
