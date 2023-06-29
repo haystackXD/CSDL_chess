@@ -1,16 +1,6 @@
-follow instruction for installing scoop on scoop.sh site
 
-```
-// add extras buckets
-scoop bucket add extras
-```
+![](image/screenshot1.png)
 
-```
-// install sdl2 from extras bucket
-scoop install extras/sdl2
-```
+![](image/screenshot2.png)
 
-```
-// install sdl2image
-scoop install extras/sdl2-image
-```
+![](image/screenshot3.png)
