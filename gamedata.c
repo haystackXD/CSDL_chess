@@ -42,16 +42,15 @@ void dostuff(struct winInfo* self)
 	bool quit = false;
 
 	gScene.initScene(&gScene, self);
-	while (!quit)
+	gScene.drawScene(&gScene, self);
+	SDL_RenderPresent(self->gRenderer);
+	while (SDL_WaitEvent(&self->e))
 	{
-		while (SDL_PollEvent(&self->e))
-		{
-			if (self->e.type == SDL_QUIT)
-				quit = true;
-			gScene.handleEvent(&gScene, self);
-			gScene.drawScene(&gScene, self);
-		}
-		// update window 
+		if (self->e.type == SDL_QUIT)
+			break;
+		gScene.handleEvent(&gScene, self);
+		// for sdl_waitevent
+		gScene.drawScene(&gScene, self);
 		SDL_RenderPresent(self->gRenderer);
 	}
 	gScene.freeScene(&gScene);

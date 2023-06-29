@@ -138,6 +138,7 @@ static void drawScene2(struct gameScene* self, struct winInfo* winfo)
 		color = ~color;
 	}
 
+	return;
 	// render anymoving piece if there one
 	if (m_objects->moving_piece.type != NONE) {
 		struct piece_stack *m_Stack = &m_objects->m_Stack;

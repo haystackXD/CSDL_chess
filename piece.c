@@ -199,8 +199,14 @@ static void printChess(struct Piece chessboard[])
 
 void setupBoard(struct Piece*chessboard, int mode)
 {
-    int idx, side_param;
+    int idx, idy, side_param;
     side_param = (mode & 0xffff == 0x00) ? -1 : 1;
+
+    for (idx = 0; idx < TOTAL_CHESS_COLS; idx++)
+    {
+	    for (int idy = 2; idy < 6; idy++)
+		    chessboard[idy * TOTAL_CHESS_COLS + idx].type = NONE;
+    }
 
     if (side_param == 1)
     {
@@ -248,6 +254,7 @@ void setupBoard(struct Piece*chessboard, int mode)
     chessboard[7 * TOTAL_CHESS_COLS + idx].type = KING;
     chessboard[0 * TOTAL_CHESS_COLS + (TOTAL_CHESS_COLS-idx-1)].type = QUEEN;
     chessboard[7 * TOTAL_CHESS_COLS + (TOTAL_CHESS_COLS-idx-1)].type = QUEEN;
+
 
     printChess(chessboard);
 }
