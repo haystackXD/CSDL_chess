@@ -28,14 +28,14 @@ static void handleEvent2(struct gameScene* self, struct winInfo* winfo)
 			boxSize = m_objects->boardSize / 8;
 			idx = (e->button.x - m_objects->start_x) / boxSize;
 			idy = (e->button.y - m_objects->start_y) / boxSize;
- 			color = m_objects->mode & 0xffff0000 == 0x00 ? BLACK : WHITE;
+ 			color = (m_objects->mode & 0xffff0000) == 0x00 ? BLACK : WHITE;	// whose turn
 
 			if (
 				m_objects->moving_piece.type == NONE &&
 				e->button.x > m_objects->start_x  && e->button.x < m_objects->start_x + m_objects->boardSize &&
 				e->button.y > m_objects->start_y && e->button.y < m_objects->start_y + m_objects->boardSize &&
 				m_objects->chessboard[idy * TOTAL_CHESS_COLS + idx].type != NONE &&
-				m_objects->chessboard[idy * TOTAL_CHESS_COLS + idx].color == color
+				m_objects->chessboard[idy * TOTAL_CHESS_COLS + idx].color != color
 			)
 			{
 
@@ -81,12 +81,9 @@ static void handleEvent2(struct gameScene* self, struct winInfo* winfo)
 						break;
 					}
 				}
+				!flag ?  current_position = m_objects->prev_position : m_objects->mode = ~m_objects->mode;
 
-				if (!flag) 
-					current_position = m_objects->prev_position;
-				else 
-					m_objects->mode = ~m_objects->mode;
-
+				// change position of selected piece
 				memcpy(&m_objects->chessboard[current_position], &m_objects->moving_piece, sizeof(struct Piece));
 				m_objects->moving_piece.type = NONE;
 			}
@@ -138,7 +135,6 @@ static void drawScene2(struct gameScene* self, struct winInfo* winfo)
 		color = ~color;
 	}
 
-	return;
 	// render anymoving piece if there one
 	if (m_objects->moving_piece.type != NONE) {
 		struct piece_stack *m_Stack = &m_objects->m_Stack;
