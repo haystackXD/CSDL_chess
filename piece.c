@@ -125,7 +125,10 @@ void knight_moves(struct Piece* chessboard, struct piece_stack* m_Stack, int sid
 
 	for (int idx = 0; idx < array_size(index_array); idx++)
 	{
-		if (row+index_array[idx][0] < TOTAL_CHESS_COLS && col+index_array[idx][1] >= 0)
+		if (
+			row+index_array[idx][0] < TOTAL_CHESS_ROWS && row+index_array[idx][0] >= 0 &&
+			col+index_array[idx][1] < TOTAL_CHESS_COLS && col+index_array[idx][1] >= 0
+		)
 			_DIAGONAL(index_array[idx][0], index_array[idx][1]);
 	}
 }
