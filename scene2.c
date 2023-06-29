@@ -81,7 +81,8 @@ static void handleEvent2(struct gameScene* self, struct winInfo* winfo)
 						break;
 					}
 				}
-				!flag ?  current_position = m_objects->prev_position : m_objects->mode = ~m_objects->mode;
+				if (!flag)  current_position = m_objects->prev_position;
+				else m_objects->mode = ~m_objects->mode;
 
 				// change position of selected piece
 				memcpy(&m_objects->chessboard[current_position], &m_objects->moving_piece, sizeof(struct Piece));
@@ -175,6 +176,7 @@ void initScene2(struct gameScene* self, struct winInfo* winfo)
 	self->drawScene = drawScene2;
 	self->freeScene = freeScene2;
 
+	m_objects->moving_piece.type = NONE;
 	m_objects->mode = 0xffff0000;
 	setupBoard(m_objects->chessboard , m_objects->mode);
 
