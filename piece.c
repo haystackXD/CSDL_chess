@@ -24,42 +24,6 @@ int row, col, position;
      }														\
 }
 
-void king_moves(struct Piece* chessboard, struct piece_stack *m_Stack, int side_param)
-{
-	int idx, idy;
-	for (idy = 0; idy < array_size(pos); idy++)
-	{
-		idx = pos[idy];
-		if (row+side_param*idx < TOTAL_CHESS_ROWS && row+side_param*idx >= 0)
-		{
-			if (chessboard[(row+side_param * idx) * TOTAL_CHESS_COLS + col].type == NONE)
-				m_Stack->buffer[m_Stack->top++] = (row+side_param * idx) * TOTAL_CHESS_COLS + col;
-
-			else if (chessboard[(row+side_param * idx) * TOTAL_CHESS_COLS + col].color != chessboard[position].color)
-				m_Stack->buffer[m_Stack->top++] = (row+side_param * idx) * TOTAL_CHESS_COLS + col;
-		}
-
-		if (col+idx < TOTAL_CHESS_COLS && col+idx >= 0)
-		{
-			if (chessboard[row * TOTAL_CHESS_COLS + col+idx].type == NONE)
-				m_Stack->buffer[m_Stack->top++] = row * TOTAL_CHESS_COLS + col+idx;
-
-			else if (chessboard[row * TOTAL_CHESS_COLS + col+idx].color != chessboard[position].color)
-				m_Stack->buffer[m_Stack->top++] = row * TOTAL_CHESS_COLS + col+idx;
-		}
-	}
-
-	// possible positions for knight
-	for (int idy = 0; idy < array_size(pos); idy++)
-	{
-		for (int idx = 0; idx < array_size(pos); idx++)
-		{
-			if (row+pos[idy] < TOTAL_CHESS_COLS && col+pos[idx] >= 0)
-				_DIAGONAL(pos[idy], pos[idx]);
-		}
-	}
-}
-
 void rook_moves(struct Piece* chessboard, struct piece_stack *m_Stack, int side_param)
 {
     int idx, idy;
@@ -108,24 +72,6 @@ void bishop_moves(struct Piece* chessboard, struct piece_stack* m_Stack, int sid
 
     for (idx = 1, idy = 1; row+idx < TOTAL_CHESS_ROWS && col+idy < TOTAL_CHESS_COLS; idx++, idy++)
         DIAGONAL_UPDATE_WFOR(idx, idy);
-}
-
-void knight_moves(struct Piece* chessboard, struct piece_stack* m_Stack, int side_param)
-{
-	// possible positions for knight
-	const int index_array[][2] = {
-		{ 2,  1}, { 1,  2}, {-2,  1}, {-1,  2},
-		{-2, -1}, {-1, -2}, { 2, -1}, { 1, -2}
-	};
-
-	for (int idx = 0; idx < array_size(index_array); idx++)
-	{
-		if (
-			row+index_array[idx][0] < TOTAL_CHESS_ROWS && row+index_array[idx][0] >= 0 &&
-			col+index_array[idx][1] < TOTAL_CHESS_COLS && col+index_array[idx][1] >= 0
-		)
-			_DIAGONAL(index_array[idx][0], index_array[idx][1]);
-	}
 }
 
 
@@ -195,11 +141,59 @@ void piece_getMoves(struct Piece* chessboard, struct piece_stack* m_Stack, int c
 	    break;
 
         case KNIGHT:
-            knight_moves(chessboard, m_Stack, side_param);
+	    {
+		    // possible positions for knight
+		    const int index_array[][2] = {
+			    { 2,  1}, { 1,  2}, {-2,  1}, {-1,  2},
+			    {-2, -1}, {-1, -2}, { 2, -1}, { 1, -2}
+		    };
+
+		    for (int idx = 0; idx < array_size(index_array); idx++)
+		    {
+			    if (
+					    row+index_array[idx][0] < TOTAL_CHESS_ROWS && row+index_array[idx][0] >= 0 &&
+					    col+index_array[idx][1] < TOTAL_CHESS_COLS && col+index_array[idx][1] >= 0
+			       )
+				    _DIAGONAL(index_array[idx][0], index_array[idx][1]);
+		    }
+	    }
 	    break;
 
 	case KING:
-	    king_moves(chessboard, m_Stack, side_param);
+	    {
+		    int idx, idy;
+		    for (idy = 0; idy < array_size(pos); idy++)
+		    {
+			    idx = pos[idy];
+			    if (row+side_param*idx < TOTAL_CHESS_ROWS && row+side_param*idx >= 0)
+			    {
+				    if (chessboard[(row+side_param * idx) * TOTAL_CHESS_COLS + col].type == NONE)
+					    m_Stack->buffer[m_Stack->top++] = (row+side_param * idx) * TOTAL_CHESS_COLS + col;
+
+				    else if (chessboard[(row+side_param * idx) * TOTAL_CHESS_COLS + col].color != chessboard[position].color)
+					    m_Stack->buffer[m_Stack->top++] = (row+side_param * idx) * TOTAL_CHESS_COLS + col;
+			    }
+
+			    if (col+idx < TOTAL_CHESS_COLS && col+idx >= 0)
+			    {
+				    if (chessboard[row * TOTAL_CHESS_COLS + col+idx].type == NONE)
+					    m_Stack->buffer[m_Stack->top++] = row * TOTAL_CHESS_COLS + col+idx;
+
+				    else if (chessboard[row * TOTAL_CHESS_COLS + col+idx].color != chessboard[position].color)
+					    m_Stack->buffer[m_Stack->top++] = row * TOTAL_CHESS_COLS + col+idx;
+			    }
+		    }
+
+		    // possible positions for knight
+		    for (int idy = 0; idy < array_size(pos); idy++)
+		    {
+			    for (int idx = 0; idx < array_size(pos); idx++)
+			    {
+				    if (row+pos[idy] < TOTAL_CHESS_COLS && col+pos[idx] >= 0)
+					    _DIAGONAL(pos[idy], pos[idx]);
+			    }
+		    }
+	    }
 	    break;
     }
 }
@@ -296,5 +290,5 @@ void setupBoard(struct Piece*chessboard, int mode)
     chessboard[7 * TOTAL_CHESS_COLS + (TOTAL_CHESS_COLS-idx-1)].type = QUEEN;
 
 
-    printChess(chessboard);
+//    printChess(chessboard);
 }
