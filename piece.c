@@ -157,7 +157,7 @@ void piece_getMoves(struct Piece* chessboard, struct piece_stack* m_Stack, int c
             }
 
             // check for any possible members diagonal position
-            if (((col+1) + side_param) < TOTAL_CHESS_COLS)
+            if ((col+1) < TOTAL_CHESS_COLS)
             {
                 if (
                     chessboard[(row+side_param) * TOTAL_CHESS_COLS + col+1].type != NONE && 
@@ -166,7 +166,7 @@ void piece_getMoves(struct Piece* chessboard, struct piece_stack* m_Stack, int c
                     m_Stack->buffer[m_Stack->top++] = (row+side_param) * TOTAL_CHESS_COLS + col+1;
             }
 
-            if (((col-1) + side_param) >= 0)
+            if ((col-1) >= 0)
             {
                 if (
                     chessboard[(row+side_param) * TOTAL_CHESS_COLS + col-1].type != NONE && 
