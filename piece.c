@@ -24,11 +24,6 @@ int row, col, position;
      }														\
 }
 
-#define ROW_MOVE(idy, idx) {												\
-}
-
-#define COL_MOVE(idy, idx) {												\
-}
 void king_moves(struct Piece* chessboard, struct piece_stack *m_Stack, int side_param)
 {
 	int idx, idy;
@@ -154,8 +149,11 @@ void piece_getMoves(struct Piece* chessboard, struct piece_stack* m_Stack, int c
             if ((side_param == 1 && (row + side_param * idx) == 1) || (side_param == -1 && (row + side_param * idx) == 6))
             {
                 for (idx = 1; idx < 3; idx++)
-                    if (chessboard[(row+side_param*idx) * TOTAL_CHESS_COLS + col].type == NONE)
-                        m_Stack->buffer[m_Stack->top++] = (row+side_param*idx) * TOTAL_CHESS_COLS + col;
+		{
+                    if (chessboard[(row+side_param*idx) * TOTAL_CHESS_COLS + col].type != NONE)
+			    break;
+		    m_Stack->buffer[m_Stack->top++] = (row+side_param*idx) * TOTAL_CHESS_COLS + col;
+		}
             }
 
             // check for any possible members diagonal position
